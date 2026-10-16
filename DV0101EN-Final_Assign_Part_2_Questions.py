@@ -136,7 +136,12 @@ def update_output_container(selected_statistics, input_year):
         # Hint:Use the columns Year and Automobile_Sales.
         yas = data.groupby('Year')['Automobile_Sales'].mean().reset_index()
         Y_chart1 = dcc.Graph(
-            figure=px.line(yas, x='Year', y='Automobile_Sales', title='Yearly Automobile Sales for the Whole Period'))
+            figure=px.line(yas, x='Year', y='Automobile_Sales', title='Yearly Automobile Sales for the Whole Period')
+            .add_annotation(text="Peak sales volume",
+                            x=yas.loc[yas['Automobile_Sales'].idxmax(), 'Year'],
+                            y=yas['Automobile_Sales'].max(),
+                            showarrow=True)
+        )
 
         # Plot 2 Total Monthly Automobile sales using line chart.
         # grouping data for plotting.
